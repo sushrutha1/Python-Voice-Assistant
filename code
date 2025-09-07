@@ -1,0 +1,35 @@
+!pip install SpeechRecognition pyttsx3 pyaudio --quiet
+
+################################################### Import libraries#####################################
+import speech_recognition as sr
+import pyttsx3
+
+################################################# Function: Speech to Text#############################################################
+def speech_to_text():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Please wait... adjusting for background noise")
+        recognizer.adjust_for_ambient_noise(source, duration=2)
+        print("Speak now...")
+        audio = recognizer.listen(source)
+
+    try:
+        text = recognizer.recognize_google(audio)
+        print("You said:", text)
+        return text
+    except sr.UnknownValueError:
+        print("Sorry, could not understand audio")
+    except sr.RequestError:
+        print("Could not request results, check your internet")
+# ##################################################Function: Text to Speech#######################################################
+def text_to_speech(text):
+    engine = pyttsx3.init()
+    # Optional: adjust volume and speed
+    engine.setProperty('volume', 1.0)
+    engine.setProperty('rate', 150)
+    engine.say(text)
+    engine.runAndWait()
+########################### Main: Combine Speech-to-Text and Text-to-Speech#################################
+spoken_text = speech_to_text()
+if spoken_text:
+    text_to_speech("You said " + spoken_text)
