@@ -1,5 +1,4 @@
 # Python-Voice-Assistant
-# Python Voice Assistant
 
 This Jupyter Notebook demonstrates a simple voice assistant using Python.
 
